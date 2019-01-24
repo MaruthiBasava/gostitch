@@ -26,5 +26,5 @@ files:
 `profile_repo` and `group_repo` are the names of the stitched files.
 `yield` field is where you enter the path of the desired location of your stitched file. 
 
-**once you are done editing the configuration file, make sure to***
+**once you are done editing the configuration file, make sure to**
 ```$ gostitch update```
