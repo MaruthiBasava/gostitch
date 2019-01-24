@@ -20,38 +20,49 @@ type FileConf struct {
 	Exclude   []string `yaml:"exclude"`
 }
 
-func ParseStitchConf() {
+func StitchInit() error {
 
 	conf := StitchConf{}
+	filename := "stitchconf.yml"
 
-	ctnts, err := ioutil.ReadFile("stitchconf.yml")
+	if _, err := os.Stat("./" + filename); os.IsNotExist(err) {
+		if _, err := os.Create("./" + filename); err != nil {
+			return err
+		}
+		return nil
+	}
+
+	ctnts, err := ioutil.ReadFile(filename)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	err = yaml.Unmarshal([]byte(ctnts), &conf)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	for k := range conf.Files {
-		YieldStitchedFile(conf.Files[k], k)
+		if err := YieldStitchedFile(conf.Files[k], k); err != nil {
+			return err
+		}
 	}
 
+	return nil
 }
 
-func YieldStitchedFile(fileConf FileConf, filename string) {
+func YieldStitchedFile(fileConf FileConf, filename string) error {
 
 	cp := FileCompletePath(fileConf.Yield, fileConf.Extension, filename)
 	if _, err := os.Stat(cp); err == nil {
 		if err := os.Remove(cp); err != nil {
-			panic(err)
+			return err
 		}
 	}
 
 	files, err := ioutil.ReadDir("./" + fileConf.Directory)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	var stitchedString strings.Builder
@@ -59,11 +70,10 @@ func YieldStitchedFile(fileConf FileConf, filename string) {
 	fmt.Fprint(&stitchedString, StitchedFileHeader())
 
 	for f, _ := range FilterFiles(fileConf.Exclude, files, fileConf.Extension) {
-		fmt.Print(f)
 		cp := FileCompletePath(fileConf.Directory, "", f)
 		ctnts, err := ioutil.ReadFile(cp)
 		if err != nil {
-			panic(err)
+			return err
 		}
 
 		fmt.Fprint(&stitchedString, FileContent(f, string(ctnts[:])))
@@ -71,8 +81,10 @@ func YieldStitchedFile(fileConf FileConf, filename string) {
 
 	err = ioutil.WriteFile(cp, []byte(stitchedString.String()), 0644)
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
 
 func FileCompletePath(path string, ext string, filename string) string {
