@@ -10,7 +10,7 @@ import (
 )
 
 type StitchConf struct {
-	Files map[string]FileConf `yaml:"files"`
+	Files map[string]FileConf `yaml:"stitch_files"`
 }
 
 type FileConf struct {
