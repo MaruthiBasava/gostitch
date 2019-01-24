@@ -4,8 +4,7 @@
 ```$ go get github.com/maruthibasava/gostitch```
 
 # Usage  
-```$ gostitch update```
-simply edit the `stitchconf.yml` file to your liking.
+```$ gostitch update``` then simply edit the `stitchconf.yml` file to your liking.
 
 # Example
 
@@ -27,4 +26,5 @@ files:
 `profile_repo` and `group_repo` are the names of the stitched files.
 `yield` field is where you enter the path of the desired location of your stitched file. 
 
-
+**once you are done editing the configuration file, make sure to***
+```$ gostitch update```
