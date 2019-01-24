@@ -1,0 +1,16 @@
+
+files: 
+  profile_repo: 
+    extension: .sql
+    directory: sql/profile
+    yield: sql/profile
+  contest_repo: 
+    extension: .sql
+    directory: sql/contest
+    yield: sql/contest
+    exclude: 
+      - contest_create.sql
+      - contest_force_update.sql 
+
+
+  
