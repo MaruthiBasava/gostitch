@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 )
 
+// App constants for the CLI
 const (
 	AppName    = "gostitch"
 	AppUsage   = "stitch files within various directories"
