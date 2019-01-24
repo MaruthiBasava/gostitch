@@ -98,7 +98,7 @@ func fileCompletePath(path string, ext string, filename string) string {
 
 // StitchedFileHeader returns stitched file header
 func stitchedFileHeader() string {
-	return `/* GENERATED FILE DO NOT EDIT */` + lbrk() + lbrk()
+	return `/* GENERATED FILE DO NOT EDIT */` + lbrk()
 }
 
 // Line break
@@ -109,7 +109,7 @@ func lbrk() string {
 
 // Formats file content
 func fileContent(filename string, content string) string {
-	return fmt.Sprintf(`/* %s */%s%s`, filename, lbrk(), content)
+	return fmt.Sprintf(`%s/* %s */%s%s`, lbrk(), filename, lbrk(), content)
 }
 
 // filters files
