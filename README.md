@@ -10,7 +10,7 @@
 
 **stitchconf.yml**
 ```
-files: 
+stitch_files: 
   profile_repo: 
     extension: .sql
     directory: sql/profiles
