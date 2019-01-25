@@ -28,3 +28,6 @@ stitch_files:
 
 **once you are done editing the configuration file, make sure to**
 ```$ gostitch update```
+
+
+https://github.com/MaruthiBasava/gostitch-example
