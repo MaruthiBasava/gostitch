@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"strings"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -69,9 +68,10 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 		return err
 	}
 
-	var stitchedString strings.Builder
-
-	fmt.Fprint(&stitchedString, stitchedFileHeader())
+	err = ioutil.WriteFile(cp, stitchedFileHeader(), 0644)
+	if err != nil {
+		return err
+	}
 
 	for f := range filterFiles(fileConf.Exclude, files, fileConf.Extension) {
 		cp := fileCompletePath(fileConf.Directory, "", f)
@@ -80,12 +80,11 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 			return err
 		}
 
-		fmt.Fprint(&stitchedString, fileContent(f, string(ctnts[:])))
-	}
+		err = ioutil.WriteFile(cp, fileContent(f, string(ctnts)), 0644)
+		if err != nil {
+			return err
+		}
 
-	err = ioutil.WriteFile(cp, []byte(stitchedString.String()), 0644)
-	if err != nil {
-		return err
 	}
 
 	return nil
@@ -97,19 +96,13 @@ func fileCompletePath(path string, ext string, filename string) string {
 }
 
 // StitchedFileHeader returns stitched file header
-func stitchedFileHeader() string {
-	return `/* GENERATED FILE DO NOT EDIT */` + lbrk()
-}
-
-// Line break
-func lbrk() string {
-	return `
-`
+func stitchedFileHeader() []byte {
+	return []byte("/* GENERATED FILE DO NOT EDIT */ \n")
 }
 
 // Formats file content
-func fileContent(filename string, content string) string {
-	return fmt.Sprintf(`%s/* %s */%s%s`, lbrk(), filename, lbrk(), content)
+func fileContent(filename string, content string) []byte {
+	return []byte(fmt.Sprintf("\n/* %s */\n%s", filename, content))
 }
 
 // filters files

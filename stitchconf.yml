@@ -1,0 +1,6 @@
+
+stitch_files: 
+  alpha:
+    directory: sql
+    yield: sql
+    extension: .sql
