@@ -1,0 +1,7 @@
+
+
+stitch_files: 
+  profile_repo: 
+    extension: .sql
+    directory: sql/profiles
+    yield: sql/profiles

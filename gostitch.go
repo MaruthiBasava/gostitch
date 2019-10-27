@@ -68,6 +68,13 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 		return err
 	}
 
+	fmt.Println(cp)
+
+	err = ioutil.WriteFile(cp, stitchedFileHeader(), 0644)
+	if err != nil {
+		return err
+	}
+
 	for f := range filterFiles(fileConf.Exclude, files, fileConf.Extension) {
 		cp := fileCompletePath(fileConf.Directory, "", f)
 		ctnts, err := ioutil.ReadFile(cp)
@@ -90,9 +97,14 @@ func fileCompletePath(path string, ext string, filename string) string {
 	return fmt.Sprintf("./%s/%s%s", path, filename, ext)
 }
 
+// StitchedFileHeader returns stitched file header
+func stitchedFileHeader() []byte {
+	return []byte("/* GENERATED FILE DO NOT EDIT */ \n")
+}
+
 // Formats file content
 func fileContent(filename string, content string) []byte {
-	return []byte(fmt.Sprintf("-- %s \n%s", filename, content))
+	return []byte(fmt.Sprintf("\n/* %s */\n%s", filename, content))
 }
 
 // filters files
