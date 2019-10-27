@@ -97,12 +97,12 @@ func fileCompletePath(path string, ext string, filename string) string {
 
 // StitchedFileHeader returns stitched file header
 func stitchedFileHeader() []byte {
-	return []byte("/* GENERATED FILE DO NOT EDIT */ \n")
+	return []byte("")
 }
 
 // Formats file content
 func fileContent(filename string, content string) []byte {
-	return []byte(fmt.Sprintf("\n/* %s */\n%s", filename, content))
+	return []byte(fmt.Sprintf("-- %s \n%s", filename, content))
 }
 
 // filters files
