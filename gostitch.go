@@ -68,11 +68,6 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 		return err
 	}
 
-	err = ioutil.WriteFile(cp, stitchedFileHeader(), 0644)
-	if err != nil {
-		return err
-	}
-
 	for f := range filterFiles(fileConf.Exclude, files, fileConf.Extension) {
 		cp := fileCompletePath(fileConf.Directory, "", f)
 		ctnts, err := ioutil.ReadFile(cp)
@@ -93,11 +88,6 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 // FileCompletePath returns complete path of the file
 func fileCompletePath(path string, ext string, filename string) string {
 	return fmt.Sprintf("./%s/%s%s", path, filename, ext)
-}
-
-// StitchedFileHeader returns stitched file header
-func stitchedFileHeader() []byte {
-	return []byte("")
 }
 
 // Formats file content
