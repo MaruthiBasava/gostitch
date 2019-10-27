@@ -76,8 +76,8 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 	}
 
 	for f := range filterFiles(fileConf.Exclude, files, fileConf.Extension) {
-		cp := fileCompletePath(fileConf.Directory, "", f)
-		ctnts, err := ioutil.ReadFile(cp)
+		fp := fileCompletePath(fileConf.Directory, "", f)
+		ctnts, err := ioutil.ReadFile(fp)
 		if err != nil {
 			return err
 		}
@@ -104,7 +104,7 @@ func stitchedFileHeader() []byte {
 
 // Formats file content
 func fileContent(filename string, content string) []byte {
-	return []byte(fmt.Sprintf("\n/* %s */\n%s", filename, content))
+	return []byte(fmt.Sprintf("-- %s\n%s", filename, content))
 }
 
 // filters files
