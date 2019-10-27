@@ -70,10 +70,10 @@ func yieldStitchedFile(fileConf FileConf, filename string) error {
 
 	fmt.Println(cp)
 
-	err = ioutil.WriteFile(cp, stitchedFileHeader(), 0644)
-	if err != nil {
-		return err
-	}
+	// err = ioutil.WriteFile(cp, stitchedFileHeader(), 0644)
+	// if err != nil {
+	// 	return err
+	// }
 
 	for f := range filterFiles(fileConf.Exclude, files, fileConf.Extension) {
 		fp := fileCompletePath(fileConf.Directory, "", f)
